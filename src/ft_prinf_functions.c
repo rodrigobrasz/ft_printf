@@ -12,31 +12,31 @@
 
 #include "ft_printf.h"
 
-int	ft_print_char(int c)
+int	ft_printf_char(int c)
 {
 	return (write(1, &c, 1));
 }
 
-int	ft_putstr(char *s)
+int	ft_printf_str(char *str)
 {
-	int	printed_count;
-	char *str
+	int		printed_chars;
 
-	printed_count = 0;
-
-	while (str[printed_count])
+	printed_chars = 0;
+	if (!str)
+		str = "(null)";
+	while (str[printed_chars])
 	{
-		write (1, &str[printed_count], 1);
-		printed_count++;
+		if (write(1, &str[printed_chars], 1) == -1)
+			return (-1);
+		printed_chars++;
 	}
-	return (printed_count);
+	return (printed_chars);
 }
 
-int ft_putnbr(long nb)
+int ft_printf_nbr(long nb)
 {
 	int		result;
 	int		printed_count;
-	char	c;
 
 	printed_count = 0;
 	if (nb < 0)
@@ -44,24 +44,24 @@ int ft_putnbr(long nb)
 		result = write(1, "-", 1);
 		if (result == -1)
 			return (-1);
-		printed_count += 1;
+		printed_count += result;
 		nb = -nb;
 	}
 	if (nb > 9)
 	{
-		result = ft_putnbr(nb / 10);
+		result = ft_printf_nbr(nb / 10);
 		if (result == -1)
 			return (-1);
 		printed_count += result;
 	}
-	c = (nb % 10) + '0';
-	if (write (1, &c, 1) == -1)
-		return (-1);
-	printed_count ++;
-	return (printed_count)
+	result = ft_printf_char((nb % 10) + '0');
+		if (result == -1)
+			return (-1);
+		printed_count += result;
+		return (printed_count);
 }
 
-static int ft_puthexa(unsigned long nb, char base)
+int ft_printf_hexa(unsigned long nb, char base)
 {
 	int printed_count;
 	int result;
@@ -73,20 +73,38 @@ static int ft_puthexa(unsigned long nb, char base)
 	printed_count = 0;
 	if (nb > 15)
 	{
-		result = ft_puthexa(nb / 16, base)
+		result = ft_printf_hexa(nb / 16, base);
 		if (result == -1)
 			return (-1);
 		printed_count += result;
 	}
-	result = write(1, &hex[nb % 16], 1)
+	result = write(1, &hex[nb % 16], 1);
 	if (result == -1)
 		return (-1);
 	printed_count += result;
 	return (printed_count);
 }
 
-static int ft_putptr(void *ptr)
+int ft_printf_ptr(unsigned long ptr)
 {
-	int conv;
-	int	
+	int	printed_count;
+	int	result;
+
+	printed_count = 0;
+	if (ptr == 0)
+	{
+		result = write(1, "(nil)", 5 );
+		if (result == -1)
+			return (-1);
+		return (printed_count += result);
+	}
+	result = write(1, "0x", 2);
+	if (result == -1)
+		return (-1);
+	printed_count += result;
+	result = ft_printf_hexa(ptr, 'x');
+	if (result == -1)
+		return (-1);
+	printed_count += result;
+	return (printed_count);
 }

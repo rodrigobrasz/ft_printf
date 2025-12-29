@@ -10,8 +10,61 @@
 #                                                                              #
 # **************************************************************************** #
 
+#LIBRARY NAME:
+NAME = libftprintf.a
 
-NAME = PRINTF.A
+#FILES TO COMPILE:
+FILES = ft_printf.c ft_printf_functions.c
 
-SRC = ft_printf.c ft_printf_utils.c
+OBJS = $()
 
+# COMPILING FLAGS:
+# -WALL : Show all warnigs;
+# -Wextra : Show extra warnings;
+# -Werror : Treat warnings as errors;
+# -i : Include header;
+CC = cc
+FLAGS = -Wall -Werror -Wextra -I.
+RM = rm -r
+
+#COLLORS ANSI:
+GREEN = \033[0;32m # 
+RED = \033[0;31m #
+BLUE = \033[0;34m #
+YELLOW = \033[5;33m #
+RESET = \033[0m #
+
+all : $(NAME)
+
+#ar rcs = ****	
+$(NAME): $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+
+#
+%.o : %.c
+	@echo "$(YELLOW)Compiling:$(RESET) $(BLUE)$<$(RESET)"
+	@$(CC) $(FLAGS) -c -I. $< -o $@
+
+#CLEANERS
+clean: 
+	@$(RM) $(OBJS)
+	@echo "$(RED)Deleted all your Objects files.$(RESET)"
+
+fclean: clean
+	@$(YELLOW) $(RM) $(NAME)
+	@echo "$(RESET)"
+	@echo			⠀⠀⠀⠀⠀⠀⠀"⢀⣠⣤⣶⣶⣶⣶⣶⣤⣄⡀"⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	@echo		⠀⠀⠀⠀⠀	"⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⡀"⠀⠀⠀⠀⠀
+	@echo		⠀⠀⠀"⣠⣴⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣮⣵⣄"⠀⠀⠀
+	@echo		⠀⠀"⢾⣻⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⡀"⠀
+	@echo		⠀"⠸⣽⣻⠃⣿⡿⠋⣉⠛⣿⣿⣿⣿⣿⣿⣿⣿⣏⡟⠉⡉⢻⣿⡌⣿⣳⡥"⠀
+	@echo		⠀"⢜⣳⡟⢸⣿⣷⣄⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣠⣼⣿⣇⢸⢧⢣"⠀
+	@echo		⠀"⠨⢳⠇⣸⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⠀⡟⢆"⠀
+	@echo		⠀⠀"⠈⠀⣾⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣽⣿⣿⠐⠈"⠀⠀
+	@echo		⠀"⢀⣀⣼⣷⣭⣛⣯⡝⠿⢿⣛⣋⣤⣤⣀⣉⣛⣻⡿⢟⣵⣟⣯⣶⣿⣄⡀"⠀
+	@echo		"⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣾⣶⣶⣴⣾⣿⣿⣿⣿⣿⣿⢿⣿⣿⣧"
+	@echo		"⣿⣿⣿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⣿⡿"
+
+re : fclean all
+
+PHONY : clean fclaen all re
