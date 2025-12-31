@@ -33,7 +33,7 @@ int	ft_printf_str(char *str)
 	return (printed_chars);
 }
 
-int ft_printf_nbr(long nb)
+int	ft_printf_nbr(long nb)
 {
 	int		result;
 	int		printed_count;
@@ -55,18 +55,18 @@ int ft_printf_nbr(long nb)
 		printed_count += result;
 	}
 	result = ft_printf_char((nb % 10) + '0');
-		if (result == -1)
-			return (-1);
-		printed_count += result;
-		return (printed_count);
+	if (result == -1)
+		return (-1);
+	printed_count += result;
+	return (printed_count);
 }
 
-int ft_printf_hexa(unsigned long nb, char base)
+int	ft_printf_hexa(unsigned long nb, char base)
 {
-	int printed_count;
-	int result;
-	char *hex;
-	
+	int		printed_count;
+	int		result;
+	char	*hex;
+
 	hex = "0123456789abcdef";
 	if (base == 'X')
 		hex = "0123456789ABCDEF";
@@ -85,7 +85,7 @@ int ft_printf_hexa(unsigned long nb, char base)
 	return (printed_count);
 }
 
-int ft_printf_ptr(unsigned long ptr)
+int	ft_printf_ptr(unsigned long ptr)
 {
 	int	printed_count;
 	int	result;
@@ -93,7 +93,7 @@ int ft_printf_ptr(unsigned long ptr)
 	printed_count = 0;
 	if (ptr == 0)
 	{
-		result = write(1, "(nil)", 5 );
+		result = write(1, "(nil)", 5);
 		if (result == -1)
 			return (-1);
 		return (printed_count += result);

@@ -16,7 +16,7 @@ int	fmt_check(const char type, va_list args);
 
 int	ft_printf(const char *str, ...)
 {
-	va_list args;
+	va_list	args;
 	int		printed_count;
 	int		result;
 
@@ -34,7 +34,7 @@ int	ft_printf(const char *str, ...)
 			printed_count += result;
 		}
 		else if (write (1, str, 1) == -1)
-				return (va_end(args), -1);
+			return (va_end(args), -1);
 		else
 			printed_count++;
 		str++;
@@ -53,10 +53,17 @@ int	fmt_check(const char type, va_list args)
 	else if (type == 'd' || type == 'i')
 		return (ft_printf_nbr(va_arg(args, int)));
 	else if (type == 'p')
-		return (ft_printf_ptr(va_arg(args, unsigned int)));
+		return (ft_printf_ptr(va_arg(args, unsigned long)));
 	else if (type == 'u')
 		return (ft_printf_nbr(va_arg(args, unsigned int)));
 	else if (type == '%')
 		return (ft_printf_char('%'));
 	return (-1);
+}
+
+int main(void)
+{
+	int count;
+	count = ft_printf("abc%");
+	return (count);
 }

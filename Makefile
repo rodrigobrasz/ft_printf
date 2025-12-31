@@ -15,43 +15,40 @@ NAME = libftprintf.a
 
 #FILES TO COMPILE:
 FILES = ft_printf.c ft_printf_functions.c
+OBJS = $(patsubst %.c, %.o, $(FILES))
 
-OBJS = $()
+# HEADER
+HEADER = ft_printf.h
 
 # COMPILING FLAGS:
-# -WALL : Show all warnigs;
-# -Wextra : Show extra warnings;
-# -Werror : Treat warnings as errors;
-# -i : Include header;
 CC = cc
 FLAGS = -Wall -Werror -Wextra -I.
-RM = rm -r
+
+# REMOVE
+RM = rm -f
 
 #COLLORS ANSI:
-GREEN = \033[0;32m # 
-RED = \033[0;31m #
-BLUE = \033[0;34m #
-YELLOW = \033[5;33m #
-RESET = \033[0m #
+GREEN = \033[0;32m
+RED = \033[0;31m
+BLUE = \033[0;34m
+YELLOW = \033[5;33m
+RESET = \033[0m
 
-all : $(NAME)
+all: $(NAME)
 
-#ar rcs = ****	
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
 
-#
-%.o : %.c
+%.o: %.c $(HEADER)
 	@echo "$(YELLOW)Compiling:$(RESET) $(BLUE)$<$(RESET)"
-	@$(CC) $(FLAGS) -c -I. $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
-#CLEANERS
-clean: 
+clean:
 	@$(RM) $(OBJS)
 	@echo "$(RED)Deleted all your Objects files.$(RESET)"
 
 fclean: clean
-	@$(YELLOW) $(RM) $(NAME)
+	@$(RM) $(NAME)
 	@echo "$(RESET)"
 	@echo			⠀⠀⠀⠀⠀⠀⠀"⢀⣠⣤⣶⣶⣶⣶⣶⣤⣄⡀"⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	@echo		⠀⠀⠀⠀⠀	"⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⡀"⠀⠀⠀⠀⠀
@@ -65,6 +62,6 @@ fclean: clean
 	@echo		"⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣾⣶⣶⣴⣾⣿⣿⣿⣿⣿⣿⢿⣿⣿⣧"
 	@echo		"⣿⣿⣿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⣿⡿"
 
-re : fclean all
+re: fclean all
 
-PHONY : clean fclaen all re
+.PHONY: all clean fclean re
